@@ -1,0 +1,29 @@
+<div class="card flex justify-content-center">
+  <p-card [header]="task().title">
+    <ng-template pTemplate="header">
+      <img
+        alt="Card"
+        src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+      />
+    </ng-template>
+
+    <p-tag
+      [severity]="task().status === 'Pending' ? 'warning' : 'success'"
+      icon="pi pi-user"
+      [value]="task().status"
+    ></p-tag>
+
+    <p>{{ task().description }}</p>
+
+    <ng-template pTemplate="footer">
+      <div
+        class="flex gap-3 mt-1"
+        style="display: flex; flex-wrap: wrap; gap: 1rem"
+      >
+        <p-button icon="pi pi-check" [rounded]="true" />
+        <p-button icon="pi pi-file-edit" [rounded]="true" severity="warning" />
+        <p-button icon="pi pi-times" [rounded]="true" severity="danger" />
+      </div>
+    </ng-template>
+  </p-card>
+</div>

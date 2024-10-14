@@ -1,0 +1,42 @@
+<p-toolbar
+  [style]="{
+    margin: 'auto',
+    width: '50%',
+    'border-radius': '3rem',
+  }"
+>
+  <ng-template pTemplate="start"> </ng-template>
+  <ng-template pTemplate="center">
+    <div class="flex flex-wrap align-items-center gap-3">
+      <button
+        class="p-link inline-flex justify-content-center align-items-center text-black h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
+      >
+        <i class="pi pi-home text-2xl"></i>
+      </button>
+      <button
+        (click)="showAddTaskDialog()"
+        label="show"
+        class="p-link inline-flex justify-content-center align-items-center text-black h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
+      >
+        <i class="pi pi-file-plus text-2xl"></i>
+      </button>
+      <button
+        class="p-link inline-flex justify-content-center align-items-center text-black h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
+      >
+        <i class="pi pi-search text-2xl"></i>
+      </button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="end"> </ng-template>
+</p-toolbar>
+
+<div class="flex justify-content-center flex-wrap">
+  @for (task of tasks; track $index) {
+  <div class="m-2 border-round" style="max-width: 25%; min-height: 100px">
+    <app-task-container [task]="task" class="card"></app-task-container>
+  </div>
+  }
+</div>
+@if (visible) {
+<app-task-add [taskData]="tasks[1]" [(visible)]="visible" />
+}

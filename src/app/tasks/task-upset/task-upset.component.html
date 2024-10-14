@@ -1,0 +1,52 @@
+<p-dialog header="{{mode}}" [(visible)]="visible" (onHide)="handleHide()">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="p-fluid">
+      <div class="field">
+        <label for="title" class="block">Title</label>
+        <input
+          type="text"
+          pInputText
+          id="title"
+          placeholder="Title"
+          formControlName="title"
+        />
+        @if (taskForm.get('title')?.invalid && taskForm.get('title')?.dirty) {
+        <small class="p-error block">Title is required</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="description" class="block">Description</label>
+        <input
+          type="text"
+          pInputText
+          id="description"
+          placeholder="Description"
+          formControlName="description"
+        />
+        @if (taskForm.get('description')?.invalid &&
+        taskForm.get('description')?.dirty) {
+        <small class="p-error block">Description is required</small>
+        }
+      </div>
+
+      <div class="field">
+        <label for="status" class="block">Status</label>
+        <p-selectButton
+          [options]="stateOptions"
+          formControlName="status"
+          optionLabel="label"
+          optionValue="value"
+        >
+          </p-selectButton>
+      </div>
+
+      <button
+        pButton
+        type="submit"
+        label="Submit"
+        [disabled]="taskForm.invalid"
+      ></button>
+    </div>
+  </form>
+</p-dialog>
