@@ -17,13 +17,24 @@
 
     <ng-template pTemplate="footer">
       <div
-        class="flex gap-3 mt-1"
+        class="flex justify-content-center gap-3 mt-1"
         style="display: flex; flex-wrap: wrap; gap: 1rem"
       >
+        @if (task().status !=='Completed') {
         <p-button icon="pi pi-check" [rounded]="true" />
-        <p-button icon="pi pi-file-edit" [rounded]="true" severity="warning" />
+
+        }
+        <p-button
+          (click)="edit = true"
+          icon="pi pi-file-edit"
+          [rounded]="true"
+          severity="warning"
+        />
         <p-button icon="pi pi-times" [rounded]="true" severity="danger" />
       </div>
     </ng-template>
   </p-card>
 </div>
+@if (edit) {
+<app-task-upset [taskData]="task()" [(visible)]="edit" />
+}

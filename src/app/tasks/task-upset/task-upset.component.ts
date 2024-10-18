@@ -1,17 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  input,
-  OnDestroy,
-  OnInit,
-  output,
-  Output,
-  signal,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -26,7 +13,7 @@ import { CardModule } from 'primeng/card';
 import { Task } from '../task.model';
 
 @Component({
-  selector: 'app-task-add',
+  selector: 'app-task-upset',
   standalone: true,
   imports: [
     DialogModule,
@@ -41,7 +28,6 @@ import { Task } from '../task.model';
 export class TaskUpsetComponent {
   @Input() visible: boolean = false;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  changeDetection = inject(ChangeDetectorRef);
   taskForm!: FormGroup;
 
   taskData = input<Task>();

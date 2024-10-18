@@ -14,13 +14,16 @@
         <i class="pi pi-home text-2xl"></i>
       </button>
       <button
-        (click)="showAddTaskDialog()"
+        (click)="showUpSetTaskDialog()"
         label="show"
         class="p-link inline-flex justify-content-center align-items-center text-black h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
       >
         <i class="pi pi-file-plus text-2xl"></i>
       </button>
-      <button
+      @if (searchVisible) {
+        <input (input)="filterResults(filter.value)" type="text" pInputText #filter />
+      }
+      <button (click)="showSearch()"
         class="p-link inline-flex justify-content-center align-items-center text-black h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
       >
         <i class="pi pi-search text-2xl"></i>
@@ -38,5 +41,5 @@
   }
 </div>
 @if (visible) {
-<app-task-add [taskData]="tasks[1]" [(visible)]="visible" />
+<app-task-upset [(visible)]="visible" />
 }
