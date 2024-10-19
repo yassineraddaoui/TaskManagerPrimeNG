@@ -11,9 +11,6 @@ export class TasksDataService extends DefaultDataService<Task> {
   }
 
   override getAll(): Observable<Task[]> {
-    return this.http
-      .get('https://mocki.io/v1/fcbcbab7-9c4d-4918-a1ed-6e406dcf4a88')
-      .pipe(map((res: any) => res.tasks));
+    return this.http.get<Task[]>('/api/tasks');
   }
-
 }

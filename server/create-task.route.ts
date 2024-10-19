@@ -11,7 +11,6 @@ export function createTask(req: Request, res: Response) {
 
     const newTask = {
         id: tasksKeyCounter,
-      seqNo: tasksKeyCounter,
         ...changes
     };
 
