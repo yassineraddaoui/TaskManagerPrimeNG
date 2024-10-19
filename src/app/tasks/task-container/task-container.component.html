@@ -21,7 +21,7 @@
         style="display: flex; flex-wrap: wrap; gap: 1rem"
       >
         @if (task().status !=='Completed') {
-        <p-button icon="pi pi-check" [rounded]="true" />
+        <p-button (click)="onCompleteTask(task())" icon="pi pi-check" [rounded]="true" />
 
         }
         <p-button

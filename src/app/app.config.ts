@@ -1,6 +1,7 @@
 import {
   ApplicationConfig,
   ENVIRONMENT_INITIALIZER,
+  importProvidersFrom,
   inject,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -8,9 +9,12 @@ import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
-import {  provideEffects } from '@ngrx/effects';
+import { provideEffects } from '@ngrx/effects';
 
-import { provideStoreDevtools } from '@ngrx/store-devtools';
+import {
+  provideStoreDevtools,
+  StoreDevtoolsModule,
+} from '@ngrx/store-devtools';
 import {
   EntityDataService,
   EntityDefinitionService,
@@ -41,6 +45,7 @@ export const appConfig: ApplicationConfig = {
             entityDispatcherOptions: {
               optimisticDelete: true,
               optimisticUpsert: true,
+              optimisticSaveEntities: true,
             },
           },
         });
@@ -51,7 +56,9 @@ export const appConfig: ApplicationConfig = {
     },
     provideStore(),
     provideEffects(),
-    provideStoreDevtools({ logOnly: true }),
+    importProvidersFrom(
+      StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: true })
+    ),
     provideEntityData(entityConfig, withEffects()),
   ],
 };
