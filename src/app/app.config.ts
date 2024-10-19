@@ -7,8 +7,8 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
-import { provideState, provideStore, StoreModule } from '@ngrx/store';
-import { EffectsModule, provideEffects } from '@ngrx/effects';
+import { provideStore } from '@ngrx/store';
+import {  provideEffects } from '@ngrx/effects';
 
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import {
@@ -39,7 +39,8 @@ export const appConfig: ApplicationConfig = {
         eds.registerMetadataMap({
           Task: {
             entityDispatcherOptions: {
-              optimisticUpdate: true,
+              optimisticDelete: true,
+              optimisticUpsert: true,
             },
           },
         });

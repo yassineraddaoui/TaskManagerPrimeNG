@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { Task } from '../task.model';
+import { TaskEntityService } from '../services/task-entity.service';
 
 @Component({
   selector: 'app-task-upset',
@@ -33,6 +34,8 @@ export class TaskUpsetComponent {
   taskData = input<Task>();
 
   mode!: 'Update Task' | 'Add Task';
+
+  constructor(private _taskService: TaskEntityService) {}
   ngOnInit() {
     this.mode = 'Add Task';
 
@@ -73,6 +76,7 @@ export class TaskUpsetComponent {
         ...this.taskForm.value,
       };
       console.log('Task to update:', taskDataToSubmit);
+      this._taskService.upsert(taskDataToSubmit);
 
       this.handleHide();
     }
