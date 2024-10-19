@@ -16,13 +16,12 @@ import { TaskEntityService } from '../services/task-entity.service';
 export class TaskContainerComponent {
   task = input.required<Task>();
   edit = false;
+  constructor(private taskService: TaskEntityService) {}
 
   onCompleteTask(task: Task) {
-    const updatedTask = { ...task, status: 'completed' };
-    console.log(updatedTask);
-    this.taskService.update(task);
+    const updatedTask :Task = { ...task, status: 'Completed' };
+    this.taskService.update(updatedTask);
   }
-  constructor(private taskService: TaskEntityService) {}
   onDeleteTask(task: Task) {
     this.taskService.delete(task);
   }
