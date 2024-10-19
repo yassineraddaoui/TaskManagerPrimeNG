@@ -9,7 +9,6 @@ import { DialogModule } from 'primeng/dialog';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { Task } from '../task.model';
 import { TaskEntityService } from '../services/task-entity.service';
 
@@ -33,11 +32,10 @@ export class TaskUpsetComponent {
 
   taskData = input<Task>();
 
-  mode!: 'Update Task' | 'Add Task';
+  mode: 'Update Task' | 'Add Task' = 'Add Task';
 
   constructor(private _taskService: TaskEntityService) {}
   ngOnInit() {
-    this.mode = 'Add Task';
 
     this.taskForm = new FormGroup({
       title: new FormControl('', [
@@ -67,23 +65,23 @@ export class TaskUpsetComponent {
     { label: 'In Progress', value: 'In Progress' },
     { label: 'Completed', value: 'Completed' },
   ];
-
   onSubmit() {
-    //upset
     if (this.taskForm.valid) {
-      const taskDataToSubmit = {
-        id: this.taskData()?.id,
-        ...this.taskForm.value,
-      };
-      console.log('Task to update:', taskDataToSubmit);
-      this._taskService.upsert(taskDataToSubmit);
-
-      this.handleHide();
+      const taskDataToSubmit = { ...this.taskForm.value, id: this.taskData()?.id };
+      this.mode === 'Update Task' ? this.updateTask(taskDataToSubmit) : this.createTask(taskDataToSubmit);
+      this.closeDialog();
     }
   }
-  handleHide() {
+
+  private updateTask(taskData: Partial<Task>) {
+    this._taskService.update(taskData);
+  }
+
+  private createTask(taskData: Partial<Task>) {
+    this._taskService.createTask(taskData);
+  }
+  closeDialog() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
-    this.taskForm.reset();
   }
 }

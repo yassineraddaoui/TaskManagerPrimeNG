@@ -1,4 +1,4 @@
-<p-dialog header="{{mode}}" [(visible)]="visible" (onHide)="handleHide()">
+<p-dialog header="{{mode}}" [(visible)]="visible" (onHide)="closeDialog()">
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" novalidate>
     <div class="p-fluid">
       <div class="field">
