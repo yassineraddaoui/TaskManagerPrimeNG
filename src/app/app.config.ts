@@ -1,28 +1,57 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  ENVIRONMENT_INITIALIZER,
+  importProvidersFrom,
+  inject,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
-import {StoreModule} from '@ngrx/store'
-import {EffectsModule} from '@ngrx/effects'
+import { provideState, provideStore, StoreModule } from '@ngrx/store';
+import { EffectsModule, provideEffects } from '@ngrx/effects';
 
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { RouterState, StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import {
+  EntityDataService,
+  EntityDefinitionService,
+  provideEntityData,
+  withEffects,
+} from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
+import { provideHttpClient } from '@angular/common/http';
+import { TasksResolver } from './tasks/services/tasks.resolver';
+import { TasksDataService } from './tasks/services/task-data.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),
-    importProvidersFrom(
+    provideHttpClient(),
+    TasksResolver,
+    TasksDataService,
+    {
+      provide: ENVIRONMENT_INITIALIZER,
+      useValue() {
+        const entityDataService = inject(EntityDataService);
+        const tasksDataService = inject(TasksDataService);
+        const eds = inject(EntityDefinitionService);
+        eds.registerMetadataMap({
+          Task: {
+            entityDispatcherOptions: {
+              optimisticUpdate: true,
+            },
+          },
+        });
 
-      StoreModule.forRoot({
-        router: routerReducer,
-      }),
-      StoreRouterConnectingModule.forRoot({
-        stateKey: 'router',
-      }),
-      StoreDevtoolsModule.instrument(),
-      EffectsModule.forRoot([])
-    ),
+        entityDataService.registerService('Task', tasksDataService);
+      },
+      multi: true,
+    },
+    provideStore(),
+    provideEffects(),
+    provideStoreDevtools({ logOnly: true }),
+    provideEntityData(entityConfig, withEffects()),
   ],
 };

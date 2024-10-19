@@ -21,9 +21,15 @@
         <i class="pi pi-file-plus text-2xl"></i>
       </button>
       @if (searchVisible) {
-        <input (input)="filterResults(filter.value)" type="text" pInputText #filter />
+      <input
+        (input)="filterResults(filter.value)"
+        type="text"
+        pInputText
+        #filter
+      />
       }
-      <button (click)="showSearch()"
+      <button
+        (click)="showSearch()"
         class="p-link inline-flex justify-content-center align-items-center text-black h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
       >
         <i class="pi pi-search text-2xl"></i>
@@ -34,7 +40,8 @@
 </p-toolbar>
 
 <div class="flex justify-content-center flex-wrap">
-  @for (task of tasks; track $index) {
+  @for (task of (tasks$ | async); track task.id) {
+
   <div class="m-2 border-round" style="max-width: 25%; min-height: 100px">
     <app-task-container [task]="task" class="card"></app-task-container>
   </div>
