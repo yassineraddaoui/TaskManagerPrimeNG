@@ -46,6 +46,7 @@ export const appConfig: ApplicationConfig = {
               optimisticDelete: true,
               optimisticUpsert: true,
               optimisticSaveEntities: true,
+              optimisticUpdate:true
             },
           },
         });
