@@ -17,6 +17,15 @@ export class TaskEntityService extends EntityCollectionServiceBase<Task> {
   }
 
   createTask(task: Partial<Task>): Observable<Task> {
-    return this.http.post<Task>('/api/task', task);
+    return this.http
+      .post<Task>(
+        'http://localhost:9000/api/task',
+        task
+      )
+      .pipe(
+        tap((res: Task) => {
+          this.add(res);
+        })
+      );
   }
 }

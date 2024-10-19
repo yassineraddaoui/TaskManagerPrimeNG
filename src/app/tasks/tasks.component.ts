@@ -11,7 +11,7 @@ import { tasksList } from './tasks';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TaskEntityService } from './services/task-entity.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-tasks',
@@ -38,12 +38,13 @@ export class TasksComponent implements OnInit {
     this.searchVisible = !this.searchVisible;
   }
   filterResults(filter: string) {
-    filter = filter.toLowerCase();
-    this.tasks = tasksList.filter((task) =>
-      task.title.toLocaleLowerCase().startsWith(filter)
-    );
+ 
+    this.tasks$ = this.taskService.entities$
+    .pipe(
+      map(tasks => tasks.filter(task => task.title.toLowerCase().startsWith(filter.toLowerCase())))
+  );
+
   }
-  tasks: Task[] = [];
   suggestions!: string[];
   visible: boolean = false;
   tasks$!: Observable<Task[]>;

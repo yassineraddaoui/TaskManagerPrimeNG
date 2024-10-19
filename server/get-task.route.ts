@@ -21,3 +21,4 @@ export function getTaskById(req: Request, res: Response) {
     res.status(200).json(task);
   }, 1000);
 }
+
