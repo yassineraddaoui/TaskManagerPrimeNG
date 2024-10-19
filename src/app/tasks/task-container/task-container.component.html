@@ -30,7 +30,7 @@
           [rounded]="true"
           severity="warning"
         />
-        <p-button icon="pi pi-times" [rounded]="true" severity="danger" />
+        <p-button (click)="onDeleteTask(task())" icon="pi pi-times" [rounded]="true" severity="danger" />
       </div>
     </ng-template>
   </p-card>

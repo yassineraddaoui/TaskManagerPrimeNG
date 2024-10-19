@@ -1,7 +1,6 @@
 import {
   ApplicationConfig,
   ENVIRONMENT_INITIALIZER,
-  importProvidersFrom,
   inject,
   provideZoneChangeDetection,
 } from '@angular/core';
